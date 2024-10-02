@@ -1,3 +1,5 @@
+
+
 // Love Letter Generator Function
 function generateLetter() {
     let input = document.getElementById('input-text').value;
@@ -154,7 +156,7 @@ function submitSongDedication() {
 
 // Function to load song dedications from Firestore
 function loadSongDedications() {
-    const songOutput = document.getElementById('songs-output');
+    const songOutput = document.getElementById('dedications-list');
     songOutput.innerHTML = ''; // Clear previous dedications
 
     db.collection('songsded').orderBy('timestamp', 'desc').get().then((querySnapshot) => {
@@ -208,3 +210,4 @@ window.onload = function() {
     loadNotes();
     loadSongDedications();
 };
+
