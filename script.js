@@ -125,8 +125,36 @@ particlesJS("particles-js", {
 });
 
 
-// Initialize Firestore
+// Initialize Firestore at the beginning
 const db = firebase.firestore();
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Load notes and song dedications when the DOM is fully loaded
+    loadNotes();
+    loadSongDedications();
+    
+    // Add event listeners or any other setup that needs to happen
+});
+
+// Function to submit a note
+function submitNote() {
+    const noteInput = document.getElementById('note-input').value;
+    const timestamp = new Date();
+
+    // Store the note in Firestore
+    db.collection('notes').add({
+        note: noteInput,
+        timestamp: timestamp
+    }).then(() => {
+        console.log('Note added successfully!');
+        loadNotes(); // Reload notes after adding
+    }).catch((error) => {
+        console.error('Error adding note: ', error);
+    });
+
+    // Clear input after submission
+    document.getElementById('note-input').value = '';
+}
 
 // Function to submit a song dedication
 function submitSongDedication() {
@@ -156,7 +184,7 @@ function submitSongDedication() {
 
 // Function to load song dedications from Firestore
 function loadSongDedications() {
-    const songOutput = document.getElementById('dedications-list');
+    const songOutput = document.getElementById('dedications-list'); // Make sure it matches the HTML
     songOutput.innerHTML = ''; // Clear previous dedications
 
     db.collection('songsded').orderBy('timestamp', 'desc').get().then((querySnapshot) => {
@@ -167,27 +195,6 @@ function loadSongDedications() {
             songOutput.appendChild(songDiv);
         });
     });
-}
-
-
-// Function to submit a note
-function submitNote() {
-    const noteInput = document.getElementById('note-input').value;
-    const timestamp = new Date();
-
-    // Store the note in Firestore
-    db.collection('notes').add({
-        note: noteInput,
-        timestamp: timestamp
-    }).then(() => {
-        console.log('Note added successfully!');
-        loadNotes(); // Reload notes after adding
-    }).catch((error) => {
-        console.error('Error adding note: ', error);
-    });
-
-    // Clear input after submission
-    document.getElementById('note-input').value = '';
 }
 
 // Function to load notes from Firestore
@@ -204,10 +211,3 @@ function loadNotes() {
         });
     });
 }
-
-// Load notes on page load
-window.onload = function() {
-    loadNotes();
-    loadSongDedications();
-};
-
