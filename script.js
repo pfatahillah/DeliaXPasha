@@ -123,6 +123,8 @@ particlesJS("particles-js", {
 });
 
 
+// Initialize Firestore
+const db = firebase.firestore();
 
 // Function to submit a song dedication
 function submitSongDedication() {
@@ -165,12 +167,6 @@ function loadSongDedications() {
     });
 }
 
-
-// Call loadDedications when the page loads
-window.onload = loadDedications;
-
-// Initialize Firestore
-const db = firebase.firestore();
 
 // Function to submit a note
 function submitNote() {
