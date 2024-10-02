@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="styles.css"> <!-- Link to CSS file -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"> <!-- Google Fonts -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore-compat.js"></script>
 
 </head>
 <body>
@@ -76,12 +78,12 @@
 
 
     <!-- FIREBASE SDK AING BISI LUPA-->
-     <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js"></script>
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-analytics.js";
+        import { getFirestore } from "firebase/firestore";
+        
         // TODO: Add SDKs for Firebase products that you want to use
         // https://firebase.google.com/docs/web/setup#available-libraries
       
@@ -100,7 +102,7 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
-        const db = firebase.firestore();
+        const db = getFirestore(app);
       </script>
 
     <script src="script.js"></script> <!-- Link to JavaScript file -->
