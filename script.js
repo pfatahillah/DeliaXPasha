@@ -125,15 +125,23 @@ particlesJS("particles-js", {
 });
 
 
-// Initialize Firestore at the beginning
-const db = firebase.firestore();
+// Initialize Firestore
+let db;
 
-document.addEventListener("DOMContentLoaded", function () {
-    // Load notes and song dedications when the DOM is fully loaded
-    loadNotes();
-    loadSongDedications();
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize Firestore inside DOMContentLoaded
+    db = firebase.firestore();
+
+    // Add event listeners
+    const songInput = document.getElementById('song-input');
+    const artistInput = document.getElementById('artist-input');
+    const dedicationInput = document.getElementById('dedication-input');
     
-    // Add event listeners or any other setup that needs to happen
+    // If you want to have a form submission, you can add the listener here
+    document.querySelector('button').addEventListener('click', submitSongDedication);
+
+    // Load song dedications on page load
+    loadSongDedications();
 });
 
 // Function to submit a note
