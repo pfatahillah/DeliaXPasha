@@ -1,0 +1,364 @@
+/* Base Styles */
+body {
+    background-color: #1e1e1e; /* Dark mode background */
+    color: #eee; /* Light text */
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    animation: fadeIn 1s; /* Add fade-in effect */
+}
+
+/* Animation for fade-in effect */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Button hover effect */
+@keyframes buttonHover {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+h1, h2 {
+    color: #9b59b6; /* Neon purple for headings */
+    text-shadow: 2px 2px 10px rgba(155, 89, 182, 0.7); /* Add shadow to headings */
+}
+
+a {
+    color: #9b59b6;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #fff; /* Bright white on hover */
+}
+
+/* Button Style */
+button {
+    background-color: #9b59b6;
+    color: #fff;
+    border: none;
+    padding: 12px 25px; /* Adjusted padding for buttons */
+    font-size: 18px; /* Increased font size for buttons */
+    cursor: pointer;
+    margin-top: 20px;
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+    animation: none; /* Reset animation */
+}
+
+button:hover {
+    background-color: #8e44ad; /* Darker purple on hover */
+    animation: buttonHover 0.5s; /* Add scale effect on hover */
+}
+
+/* Form and output style */
+textarea, input {
+    width: 80%;
+    height: 40px; /* Adjusted height for input */
+    background-color: #333;
+    color: #eee;
+    border: 1px solid #9b59b6;
+    border-radius: 5px; /* Rounded corners for input fields */
+    padding: 10px;
+    margin-top: 20px;
+    transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition for border */
+}
+
+textarea:focus, input:focus {
+    border-color: #8e44ad; /* Change border color on focus */
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 10px rgba(155, 89, 182, 0.5); /* Glow effect on focus */
+}
+
+#letter-output {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #2c3e50;
+    color: #fff;
+    border: 1px solid #9b59b6;
+    border-radius: 5px; /* Rounded corners */
+    display: none;
+    animation: fadeIn 0.5s; /* Add fade-in effect for letter output */
+}
+
+/* Countdown Timer Styles */
+#countdown-section {
+    margin: 30px auto; /* Center the section */
+    padding: 20px;
+    background-color: #34495e; /* Dark background for countdown */
+    border-radius: 10px; /* Rounded corners */
+    animation: fadeIn 1s; /* Fade-in effect */
+}
+
+#countdown {
+    font-size: 30px; /* Larger font for countdown */
+    font-weight: bold; /* Bold text */
+    color: #f1c40f; /* Light teal color */
+    margin-top: 20px;
+    transition: transform 0.3s ease, color 0.3s ease; /* Smooth scaling and color transition */
+}
+
+/* Animation for countdown text */
+@keyframes countdownAnim {
+    0% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+}
+
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    h1, h2 {
+        font-size: 1.5em; /* Increase font size for smaller screens */
+    }
+    button {
+        width: 100%; /* Make buttons full width on mobile */
+    }
+    #input-text {
+        height: 100px; /* Increase textarea height on smaller screens */
+    }
+}
+
+/* Notification Styles */
+.notification {
+    display: none; /* Initially hidden */
+    position: fixed; /* Fixed position at the bottom */
+    bottom: 20px; /* Distance from bottom */
+    left: 50%; /* Center it horizontally */
+    transform: translateX(-50%); /* Centering adjustment */
+    background-color: #2ecc71; /* Green background */
+    color: #fff; /* White text */
+    padding: 15px 25px; /* Padding */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+    font-size: 18px; /* Font size */
+    transition: opacity 0.5s ease, visibility 0.5s ease; /* Smooth fade-out transition */
+    z-index: 1000; /* Ensure it's above other elements */
+}
+
+/* Bouncing animation for notification */
+@keyframes bounce {
+    0% { transform: translate(-50%, 0); }
+    50% { transform: translate(-50%, -10px); }
+    100% { transform: translate(-50%, 0); }
+}
+
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1; /* Send to back */
+}
+
+/* Memory Wall Styles */
+#memory-wall {
+    margin: 30px auto; /* Center the section */
+    padding: 20px;
+    background-color: #2c3e50; /* Dark background for memory wall */
+    border-radius: 10px; /* Rounded corners */
+}
+
+#memories-container {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+    justify-content: center; /* Center items */
+}
+
+.memory-item {
+    width: 300px; /* Fixed width for each memory item */
+    margin: 15px; /* Spacing between items */
+    border: 2px solid #9b59b6; /* Border color */
+    border-radius: 10px; /* Rounded corners */
+    overflow: hidden; /* Clip any overflow */
+    background-color: #34495e; /* Background color for memory item */
+    transition: transform 0.3s; /* Transition effect */
+}
+
+.memory-item:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.memory-item img {
+    width: 100%; /* Responsive image */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.memory-item p {
+    padding: 10px; /* Padding for text */
+    color: #fff; /* White text */
+    text-align: center; /* Center text */
+}
+
+#song-dedications {
+    margin: 30px auto; /* Center the section */
+    padding: 20px;
+    background-color: #34495e; /* Dark background */
+    border-radius: 10px; /* Rounded corners */
+}
+
+.dedication-entry {
+    margin: 10px 0; /* Margin between entries */
+    padding: 10px;
+    background-color: #2c3e50; /* Slightly lighter background */
+    border-radius: 5px; /* Rounded corners */
+}
+
+h3 {
+    color: #9b59b6; /* Heading color */
+}
+
+nav {
+    background-color: #2c3e50; /* Dark background */
+    padding: 10px 0; /* Vertical padding */
+    position: sticky; /* Stick to the top on scroll */
+    top: 0; /* Position it at the top */
+    z-index: 1000; /* Ensure it stays above other elements */
+}
+
+nav ul {
+    list-style: none; /* Remove default list styling */
+    padding: 0; /* Remove padding */
+}
+
+nav li {
+    display: inline; /* Display items in a line */
+    margin: 0 15px; /* Horizontal spacing between items */
+}
+
+nav a {
+    color: #9b59b6; /* Link color */
+    text-decoration: none; /* Remove underline */
+    font-size: 18px; /* Font size */
+}
+
+nav a:hover {
+    color: #fff; /* Change color on hover */
+    transition: color 0.3s; /* Smooth transition for color change */
+}
+
+/* Note Section Styles */
+#note-section {
+    margin: 30px auto; /* Center the section */
+    padding: 20px; /* Padding around the section */
+    background-color: #2c3e50; /* Dark background for note section */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+    width: 90%; /* Responsive width */
+    max-width: 600px; /* Maximum width */
+}
+
+#note-input {
+    width: 100%; /* Full width for the input */
+    height: 100px; /* Increased height for better usability */
+    background-color: #333; /* Dark background for input */
+    color: #eee; /* Light text */
+    border: 1px solid #9b59b6; /* Border color */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px; /* Padding for input */
+    margin-top: 10px; /* Spacing above the input */
+    transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition */
+    resize: none; /* Prevent resizing of textarea */
+}
+
+#note-input:focus {
+    border-color: #8e44ad; /* Change border color on focus */
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 10px rgba(155, 89, 182, 0.5); /* Glow effect on focus */
+}
+
+.note-entry {
+    margin: 15px 0; /* Margin between note entries */
+    padding: 10px; /* Padding for note entries */
+    background-color: #34495e; /* Background color for each note */
+    border-left: 5px solid #9b59b6; /* Left border for emphasis */
+    border-radius: 5px; /* Rounded corners */
+    color: #fff; /* White text */
+}
+
+.note-entry strong {
+    display: block; /* Display timestamp as a block */
+    color: #9b59b6; /* Heading color */
+    margin-bottom: 5px; /* Spacing below the timestamp */
+}
+
+button.submit-note {
+    background-color: #9b59b6; /* Button color */
+    color: #fff; /* Button text color */
+    border: none; /* No border */
+    padding: 12px 25px; /* Button padding */
+    font-size: 16px; /* Button font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth transition */
+    margin-top: 10px; /* Spacing above the button */
+}
+
+button.submit-note:hover {
+    background-color: #8e44ad; /* Darker purple on hover */
+}
+
+/* Responsive Design for Notes */
+@media (max-width: 600px) {
+    #note-section {
+        padding: 15px; /* Adjust padding for mobile */
+    }
+
+    #note-input {
+        height: 80px; /* Adjust input height on smaller screens */
+    }
+
+    button.submit-note {
+        width: 100%; /* Make the button full width on mobile */
+    }
+}
+
+/* Navbar Styles */
+nav {
+    background-color: #2c3e50; /* Dark background */
+    padding: 15px; /* Vertical padding */
+    position: sticky; /* Stick to the top on scroll */
+    top: 0; /* Position it at the top */
+    z-index: 1000; /* Ensure it stays above other elements */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+}
+
+nav ul {
+    list-style: none; /* Remove default list styling */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+    display: flex; /* Flexbox for horizontal layout */
+    justify-content: center; /* Center items */
+}
+
+nav li {
+    margin: 0 20px; /* Horizontal spacing between items */
+}
+
+nav a {
+    color: #9b59b6; /* Link color */
+    text-decoration: none; /* Remove underline */
+    font-size: 18px; /* Font size */
+    padding: 8px 16px; /* Padding for links */
+    border-radius: 5px; /* Rounded corners for hover effect */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+}
+
+nav a:hover {
+    background-color: rgba(155, 89, 182, 0.2); /* Light purple background on hover */
+    color: #fff; /* Change text color on hover */
+}
