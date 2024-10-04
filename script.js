@@ -124,6 +124,13 @@ particlesJS("particles-js", {
     retina_detect: true,
 });
 
+// Testing Firestore
+db.collection('test').get().then((snapshot) => {
+    console.log('Firestore connected!', snapshot);
+}).catch((error) => {
+    console.error('Firestore connection failed:', error);
+});
+
 
 // Initialize Firestore
 let db;
