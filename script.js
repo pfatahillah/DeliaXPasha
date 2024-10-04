@@ -1,4 +1,4 @@
-
+let db;
 
 // Love Letter Generator Function
 function generateLetter() {
@@ -88,9 +88,6 @@ function resetForm() {
 const inputText = document.getElementById('input-text');
 const charCountDisplay = document.getElementById('charCount');
 
-inputText.addEventListener('input', function() {
-    charCountDisplay.innerText = `Character count: ${inputText.value.length}`;
-});
 
 particlesJS("particles-js", {
     particles: {
@@ -132,12 +129,10 @@ db.collection('test').get().then((snapshot) => {
 });
 
 
-// Initialize Firestore
-let db;
-
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize Firestore inside DOMContentLoaded
-    db = firebase.firestore();
+    // Initialize Firebase inside DOMContentLoaded
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
     // Add event listeners
     const songInput = document.getElementById('song-input');
@@ -145,11 +140,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const dedicationInput = document.getElementById('dedication-input');
     
     // If you want to have a form submission, you can add the listener here
-    document.querySelector('button').addEventListener('click', submitSongDedication);
+    document.getElementById('submit-btn').addEventListener('click', submitSongDedication);
 
     // Load song dedications on page load
     loadSongDedications();
-});
+
 
 // Function to submit a note
 function submitNote() {
@@ -226,3 +221,4 @@ function loadNotes() {
         });
     });
 }
+});
