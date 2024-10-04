@@ -1,4 +1,7 @@
-let db;
+// Replace these values with your Supabase API URL and anon key
+const supabaseUrl = 'https://mfmnnyfpzvhclfamikqi.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1mbW5ueWZwenZoY2xmYW1pa3FpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjgwMjY4OTcsImV4cCI6MjA0MzYwMjg5N30.NgwkA1D1BAdKfe7UGI9LFudETiKG08bVsgmqZ9kEGUo';
+const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
 // Love Letter Generator Function
 function generateLetter() {
@@ -44,7 +47,6 @@ function copyToClipboard() {
 }
 
 // Countdown Timer Function
-// Countdown Timer Function
 let countDownDate = new Date("Sep 12, 2025 00:00:00").getTime(); // Fixed countdown date
 
 // Update the countdown every second
@@ -88,137 +90,59 @@ function resetForm() {
 const inputText = document.getElementById('input-text');
 const charCountDisplay = document.getElementById('charCount');
 
-
-particlesJS("particles-js", {
-    particles: {
-        number: { value: 80 },
-        size: { value: 3 },
-        move: {
-            speed: 1,
-            direction: "none",
-            random: false,
-            straight: false,
-            out_mode: "out",
-        },
-        line_linked: {
-            enable: true,
-            distance: 150,
-            color: "#ffffff",
-            opacity: 0.4,
-            width: 1,
-        },
-    },
-    interactivity: {
-        events: {
-            onhover: { enable: true, mode: "repulse" },
-            onclick: { enable: true, mode: "push" },
-        },
-        modes: {
-            repulse: { distance: 100, duration: 1 },
-            push: { particles_nb: 4 },
-        },
-    },
-    retina_detect: true,
-});
-
-// Testing Firestore
-db.collection('test').get().then((snapshot) => {
-    console.log('Firestore connected!', snapshot);
-}).catch((error) => {
-    console.error('Firestore connection failed:', error);
-});
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    // Initialize Firebase inside DOMContentLoaded
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    // Add event listeners
-    const songInput = document.getElementById('song-input');
-    const artistInput = document.getElementById('artist-input');
-    const dedicationInput = document.getElementById('dedication-input');
-    
-    // If you want to have a form submission, you can add the listener here
-    document.getElementById('submit-btn').addEventListener('click', submitSongDedication);
-
-    // Load song dedications on page load
-    loadSongDedications();
-
-
-// Function to submit a note
-function submitNote() {
-    const noteInput = document.getElementById('note-input').value;
-    const timestamp = new Date();
-
-    // Store the note in Firestore
-    db.collection('notes').add({
-        note: noteInput,
-        timestamp: timestamp
-    }).then(() => {
-        console.log('Note added successfully!');
-        loadNotes(); // Reload notes after adding
-    }).catch((error) => {
-        console.error('Error adding note: ', error);
-    });
-
-    // Clear input after submission
-    document.getElementById('note-input').value = '';
-}
-
-// Function to submit a song dedication
-function submitSongDedication() {
+// Add Event Listener for Song Dedication Submission
+document.getElementById('submit-btn').addEventListener('click', async () => {
     const songInput = document.getElementById('song-input').value;
     const artistInput = document.getElementById('artist-input').value;
     const dedicationInput = document.getElementById('dedication-input').value;
-    const timestamp = new Date();
 
-    // Store the song dedication in Firestore
-    db.collection('songsded').add({
-        song: songInput,
-        artist: artistInput,
-        dedication: dedicationInput,
-        timestamp: timestamp
-    }).then(() => {
-        console.log('Song dedication added successfully!');
-        loadSongDedications(); // Reload dedications after adding
-    }).catch((error) => {
-        console.error('Error adding song dedication: ', error);
-    });
+    if (!songInput || !artistInput || !dedicationInput) {
+        alert('Please fill in all fields.');
+        return;
+    }
 
-    // Clear input fields after submission
+    // Insert the song dedication into the Supabase database
+    const { data, error } = await supabase
+        .from('songsded')
+        .insert([
+            { song: songInput, artist: artistInput, dedication: dedicationInput, created_at: new Date() }
+        ]);
+
+    if (error) {
+        console.error('Error adding song dedication:', error);
+    } else {
+        console.log('Song dedication added successfully!', data);
+        loadSongDedications(); // Reload the list after successful submission
+    }
+
+    // Clear the input fields after submission
     document.getElementById('song-input').value = '';
     document.getElementById('artist-input').value = '';
     document.getElementById('dedication-input').value = '';
-}
-
-// Function to load song dedications from Firestore
-function loadSongDedications() {
-    const songOutput = document.getElementById('dedications-list'); // Make sure it matches the HTML
-    songOutput.innerHTML = ''; // Clear previous dedications
-
-    db.collection('songsded').orderBy('timestamp', 'desc').get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            const songData = doc.data();
-            const songDiv = document.createElement('div');
-            songDiv.innerHTML = `<strong>${songData.song}</strong> by <em>${songData.artist}</em>: ${songData.dedication} <br><small>${songData.timestamp.toDate().toLocaleString()}</small>`;
-            songOutput.appendChild(songDiv);
-        });
-    });
-}
-
-// Function to load notes from Firestore
-function loadNotes() {
-    const notesOutput = document.getElementById('notes-output');
-    notesOutput.innerHTML = ''; // Clear previous notes
-
-    db.collection('notes').orderBy('timestamp', 'desc').get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            const noteData = doc.data();
-            const noteDiv = document.createElement('div');
-            noteDiv.innerHTML = `<strong>${noteData.timestamp.toDate().toLocaleString()}</strong>: ${noteData.note}`;
-            notesOutput.appendChild(noteDiv);
-        });
-    });
-}
 });
+
+// Function to Load Song Dedications
+async function loadSongDedications() {
+    const { data: dedications, error } = await supabase
+        .from('songsded')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+    if (error) {
+        console.error('Error fetching song dedications:', error);
+        return;
+    }
+
+    // Populate the dedications list
+    const dedicationsList = document.getElementById('dedications-list');
+    dedicationsList.innerHTML = ''; // Clear the list
+
+    dedications.forEach(dedication => {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `<strong>${dedication.song}</strong> by <em>${dedication.artist}</em>: ${dedication.dedication}`;
+        dedicationsList.appendChild(listItem);
+    });
+}
+
+// Load the dedications on page load
+document.addEventListener('DOMContentLoaded', loadSongDedications);
